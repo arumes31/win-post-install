@@ -43,7 +43,7 @@ export const getConfigObjects = (selectedIds) => {
  * @returns {string} - Formatted winget command
  */
 export const formatWingetCommand = (wingetId) => {
-  return `winget install --id=${wingetId} -e --silent --accept-package-agreements --accept-source-agreements`;
+  return `winget install --id ${wingetId} -e --silent --accept-package-agreements --accept-source-agreements`;
 };
 
 /**
