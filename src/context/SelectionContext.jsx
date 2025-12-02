@@ -1,5 +1,7 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { softwareCatalog } from '../data/software-catalog';
+import { getCategoryItemIds } from '../utils/catalogHelpers';
+import { STORAGE_KEYS } from '../constants';
 
 const SelectionContext = createContext();
 
@@ -11,7 +13,7 @@ export const SelectionProvider = ({ children }) => {
   // Load from localStorage on mount
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('win-installer-selections');
+      const saved = localStorage.getItem(STORAGE_KEYS.selections);
       if (saved) {
         const data = JSON.parse(saved);
         setSelectedSoftware(data.software || []);
@@ -26,7 +28,7 @@ export const SelectionProvider = ({ children }) => {
   useEffect(() => {
     try {
       localStorage.setItem(
-        'win-installer-selections',
+        STORAGE_KEYS.selections,
         JSON.stringify({
           software: selectedSoftware,
           configs: selectedConfigs,
@@ -38,62 +40,56 @@ export const SelectionProvider = ({ children }) => {
   }, [selectedSoftware, selectedConfigs]);
 
   // Toggle single software
-  const toggleSoftware = (id) => {
+  const toggleSoftware = useCallback((id) => {
     setSelectedSoftware((prev) =>
       prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
     );
-  };
+  }, []);
 
   // Toggle single configuration
-  const toggleConfig = (id) => {
+  const toggleConfig = useCallback((id) => {
     setSelectedConfigs((prev) =>
       prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
     );
-  };
+  }, []);
 
   // Select all software in a category
-  const selectAllInCategory = (categoryId) => {
-    const categoryItems = softwareCatalog
-      .filter((s) => s.category === categoryId)
-      .map((s) => s.id);
+  const selectAllInCategory = useCallback((categoryId) => {
+    const categoryItems = getCategoryItemIds(softwareCatalog, categoryId);
     setSelectedSoftware((prev) => [...new Set([...prev, ...categoryItems])]);
-  };
+  }, []);
 
   // Deselect all software in a category
-  const deselectAllInCategory = (categoryId) => {
-    const categoryItems = softwareCatalog
-      .filter((s) => s.category === categoryId)
-      .map((s) => s.id);
+  const deselectAllInCategory = useCallback((categoryId) => {
+    const categoryItems = getCategoryItemIds(softwareCatalog, categoryId);
     setSelectedSoftware((prev) =>
       prev.filter((id) => !categoryItems.includes(id))
     );
-  };
+  }, []);
 
   // Check if all items in category are selected
-  const isAllCategorySelected = (categoryId) => {
-    const categoryItems = softwareCatalog
-      .filter((s) => s.category === categoryId)
-      .map((s) => s.id);
+  const isAllCategorySelected = useCallback((categoryId) => {
+    const categoryItems = getCategoryItemIds(softwareCatalog, categoryId);
     return categoryItems.every((id) => selectedSoftware.includes(id));
-  };
+  }, [selectedSoftware]);
 
   // Clear all selections
-  const clearAll = () => {
+  const clearAll = useCallback(() => {
     setSelectedSoftware([]);
     setSelectedConfigs([]);
-  };
+  }, []);
 
   // Clear only software
-  const clearSoftware = () => {
+  const clearSoftware = useCallback(() => {
     setSelectedSoftware([]);
-  };
+  }, []);
 
   // Clear only configs
-  const clearConfigs = () => {
+  const clearConfigs = useCallback(() => {
     setSelectedConfigs([]);
-  };
+  }, []);
 
-  const value = {
+  const value = useMemo(() => ({
     selectedSoftware,
     selectedConfigs,
     toggleSoftware,
@@ -104,7 +100,18 @@ export const SelectionProvider = ({ children }) => {
     clearAll,
     clearSoftware,
     clearConfigs,
-  };
+  }), [
+    selectedSoftware,
+    selectedConfigs,
+    toggleSoftware,
+    toggleConfig,
+    selectAllInCategory,
+    deselectAllInCategory,
+    isAllCategorySelected,
+    clearAll,
+    clearSoftware,
+    clearConfigs,
+  ]);
 
   return (
     <SelectionContext.Provider value={value}>

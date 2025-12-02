@@ -1,90 +1,69 @@
+import { memo } from 'react';
 import { useSelection } from '../../context/SelectionContext';
+import Badge from '../Common/Badge';
+import { BADGE_COLORS, BADGE_LABELS } from '../../constants';
 
-const ConfigOption = ({ config }) => {
+const ConfigOption = memo(({ config }) => {
   const { selectedConfigs, toggleConfig } = useSelection();
   const isSelected = selectedConfigs.includes(config.id);
 
   return (
     <div
-      className={isSelected ? 'win98-inset win98-selected' : 'win98-raised'}
+      className={`cursor-pointer ${isSelected ? 'win98-inset win98-selected' : 'win98-raised'}`}
       style={{
-        padding: '8px',
-        cursor: 'pointer',
+        padding: '12px',
         backgroundColor: isSelected ? 'var(--win98-blue-dark)' : 'var(--win98-gray-light)'
       }}
       onClick={() => toggleConfig(config.id)}
     >
-      <div style={{ display: 'flex', gap: '8px' }}>
+      <div className="flex gap-2">
         <input
           type="checkbox"
           checked={isSelected}
-          onChange={() => toggleConfig(config.id)}
-          onClick={(e) => e.stopPropagation()}
-          className="win98-checkbox"
-          style={{ marginTop: '2px', flexShrink: 0 }}
+          readOnly
+          className="win98-checkbox mt-0.5 flex-shrink-0"
         />
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '6px',
-            flexWrap: 'wrap',
-            marginBottom: '4px'
-          }}>
-            <h4 style={{
-              fontSize: '11px',
-              fontWeight: 'bold',
-              color: isSelected ? 'var(--win98-white)' : 'var(--win98-black)'
-            }}>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-1.5 flex-wrap mb-1">
+            <h4
+              className="text-[11px] font-bold"
+              style={{
+                color: isSelected ? 'var(--win98-white)' : 'var(--win98-black)'
+              }}
+            >
               {config.name}
             </h4>
             {config.recommended && (
-              <span style={{
-                padding: '1px 4px',
-                fontSize: '10px',
-                backgroundColor: '#00a000',
-                color: 'white',
-                border: '1px solid black'
-              }}>
-                Recommended
-              </span>
+              <Badge color={BADGE_COLORS.recommended}>
+                {BADGE_LABELS.recommended}
+              </Badge>
             )}
             {config.requiresAdmin && (
-              <span style={{
-                padding: '1px 4px',
-                fontSize: '10px',
-                backgroundColor: '#ffff00',
-                color: 'black',
-                border: '1px solid black'
-              }}>
-                Admin Required
-              </span>
+              <Badge color={BADGE_COLORS.adminRequired} textColor="black">
+                {BADGE_LABELS.adminRequired}
+              </Badge>
             )}
             {config.requiresRestart && (
-              <span style={{
-                padding: '1px 4px',
-                fontSize: '10px',
-                backgroundColor: '#ff8000',
-                color: 'white',
-                border: '1px solid black'
-              }}>
-                Restart Required
-              </span>
+              <Badge color={BADGE_COLORS.restartRequired}>
+                {BADGE_LABELS.restartRequired}
+              </Badge>
             )}
           </div>
-          <p style={{
-            fontSize: '10px',
-            color: isSelected ? '#e0e0e0' : 'var(--win98-gray-dark)'
-          }}>
+          <p
+            className="text-[10px]"
+            style={{
+              color: isSelected ? '#e0e0e0' : 'var(--win98-gray-dark)'
+            }}
+          >
             {config.description}
           </p>
           {config.warning && (
-            <p style={{
-              fontSize: '10px',
-              fontWeight: 'bold',
-              marginTop: '4px',
-              color: isSelected ? '#ffaa00' : '#ff6600'
-            }}>
+            <p
+              className="text-[10px] font-bold mt-1"
+              style={{
+                color: isSelected ? '#ffaa00' : '#ff6600'
+              }}
+            >
               ⚠️ {config.warning}
             </p>
           )}
@@ -92,6 +71,6 @@ const ConfigOption = ({ config }) => {
       </div>
     </div>
   );
-};
+});
 
 export default ConfigOption;
