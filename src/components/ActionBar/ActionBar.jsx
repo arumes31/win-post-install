@@ -45,6 +45,7 @@ const ActionBar = () => {
               disabled={totalSelected === 0}
               className="win98-button win98-button-primary"
               style={{ minWidth: '120px' }}
+              aria-label={`Download installation script for ${totalSelected} selected items`}
             >
               Download Script
             </button>
@@ -52,6 +53,7 @@ const ActionBar = () => {
               onClick={handleClear}
               disabled={totalSelected === 0}
               className="win98-button win98-button-danger"
+              aria-label={`Clear all ${totalSelected} selected items`}
             >
               Clear All
             </button>

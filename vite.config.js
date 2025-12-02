@@ -8,5 +8,13 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom'],
+          'vendor-icons': ['react-icons/si', 'react-icons/fa', 'react-icons/fi', 'react-icons/vsc'],
+        },
+      },
+    },
   },
 })

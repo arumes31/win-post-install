@@ -15,6 +15,16 @@ const ConfigOption = memo(({ config }) => {
         backgroundColor: isSelected ? 'var(--win98-blue-dark)' : 'var(--win98-gray-light)'
       }}
       onClick={() => toggleConfig(config.id)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleConfig(config.id);
+        }
+      }}
+      aria-label={`${isSelected ? 'Unselect' : 'Select'} ${config.name} configuration`}
+      aria-pressed={isSelected}
     >
       <div className="flex gap-2">
         <input

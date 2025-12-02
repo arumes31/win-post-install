@@ -19,6 +19,8 @@ const CategorySection = ({ category, software }) => {
             justifyContent: 'flex-start',
             padding: '8px 12px'
           }}
+          aria-expanded={expanded}
+          aria-label={`${expanded ? 'Collapse' : 'Expand'} ${category.name} category`}
         >
           <span style={{ fontSize: '20px', flexShrink: 0 }}>{category.icon}</span>
           <div style={{ textAlign: 'left', flex: 1, overflow: 'hidden' }}>

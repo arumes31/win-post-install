@@ -16,6 +16,16 @@ const SoftwareCard = memo(({ software }) => {
         backgroundColor: isSelected ? 'var(--win98-blue-dark)' : 'var(--win98-gray-light)'
       }}
       onClick={() => toggleSoftware(software.id)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleSoftware(software.id);
+        }
+      }}
+      aria-label={`${isSelected ? 'Unselect' : 'Select'} ${software.name}`}
+      aria-pressed={isSelected}
     >
       <div className="flex gap-2">
         <input

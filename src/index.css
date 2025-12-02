@@ -570,3 +570,41 @@ body {
   padding: 6px 12px;
   min-height: 32px;
 }
+
+/* ================================================== */
+/* ACCESSIBILITY - KEYBOARD FOCUS INDICATORS         */
+/* ================================================== */
+
+/* Focus visible for buttons */
+.win98-button:focus-visible {
+  outline: 2px solid var(--win95-black);
+  outline-offset: 2px;
+}
+
+/* Focus visible for cards */
+[role="button"]:focus-visible {
+  outline: 2px solid var(--win95-black);
+  outline-offset: 2px;
+}
+
+/* Focus visible for inputs */
+input:focus-visible {
+  outline: 2px solid var(--win95-black);
+  outline-offset: 2px;
+}
+
+/* Skip link for keyboard navigation */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--win95-blue);
+  color: var(--win95-white);
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
