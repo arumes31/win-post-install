@@ -20,6 +20,7 @@ export {
   SiBlender,
   SiBox,
   SiBrave,
+  SiCplusplus,
   SiDbeaver,
   SiDiscord,
   SiDocker,
@@ -75,12 +76,14 @@ export {
   SiSublimetext,
   SiTelegram,
   SiThunderbird,
+  SiTidal,
   SiUbisoft,
   SiVivaldi,
   SiVlcmediaplayer,
   SiVulkan,
   SiWebstorm,
   SiWhatsapp,
+  SiYoutubemusic,
   SiZoom,
 } from 'react-icons/si';
 
@@ -127,4 +130,10 @@ export {
   BleachBitIcon,
   DriverBoosterIcon,
   RevoUninstallerIcon,
+  WinampIcon,
+  EMuleIcon,
+  NeroIcon,
+  PowerISOIcon,
+  UltraISOIcon,
+  DirectXIcon,
 } from './CustomIcons';
