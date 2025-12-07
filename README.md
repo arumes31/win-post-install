@@ -1,63 +1,74 @@
 # Windows Post-Install Script Generator
 
-A web-based tool that generates customized Windows post-installation batch scripts. Select from 115 software applications and 80 system configurations to create a personalized Windows setup script.
+A web-based tool that generates customized Windows post-installation batch scripts. Select from 115 software applications and 80 Windows configurations to create a personalized setup script.
+
+## How to Use (Production)
+
+Just open the live version:
+
+👉 **https://kaic.me/win-post-install**
+
+There you can:
+
+1. Choose the apps and settings you want.
+2. Generate a `.bat` script.
+3. Download it and run on your fresh Windows install (USB or local machine).
+
+Runs entirely in your browser — no installation required.
+
+---
 
 ## Features
 
-- **115 Software Applications**: Curated collection across 13 categories including browsers, development tools, media players, productivity apps, and more
-- **80 System Configurations**: Optimize Windows settings for performance, privacy, visual customization, and gaming
-- **Cleanup Tools**: Remove Windows bloatware and unnecessary components safely
-- **One-Click Script Generation**: Generate ready-to-run batch scripts with your selections
-- **Windows 98-Inspired UI**: Nostalgic interface design with modern functionality
-- **No Installation Required**: Runs entirely in your browser
-- **Safe and Reversible**: All changes use official Windows tools (winget, PowerShell) and are reversible
+- **115 Software Applications:** Curated apps across 13 categories  
+- **80 System Configurations:** Performance, privacy, UI, gaming tweaks  
+- **Cleanup Tools:** Remove bloatware safely  
+- **One-Click Script Generation:** Ready-to-run batch file  
+- **Windows 98-Inspired UI:** Nostalgia + modern functionality  
+- **Safe and Reversible:** Uses official Windows tools (`winget`, PowerShell)
 
-## Demo
+---
 
-Visit the live application: [https://kaic.me/win-post-install](https://kaic.me/win-post-install)
+## Live Demo
+
+🔗 **https://kaic.me/win-post-install**
+
+---
 
 ## Technologies
 
-- **React 19**: Modern UI framework
-- **Vite**: Fast build tool and development server
-- **Tailwind CSS**: Utility-first CSS framework
-- **React Icons**: Comprehensive icon library
-- **Winget**: Windows Package Manager for software installation
-- **PowerShell**: Windows automation and system configuration
+- React 19  
+- Vite  
+- Tailwind CSS  
+- React Icons  
+- Winget  
+- PowerShell  
 
-## Getting Started
+---
+
+## Running Locally (Development Only)
+
+You only need this if you plan to run or modify the source code.
 
 ### Prerequisites
 
 - Node.js 18+ and npm
 
-### Installation
+### Setup
 
-1. Clone the repository:
 ```bash
 git clone https://github.com/kaic/win-post-install.git
 cd win-post-install
-```
-
-2. Install dependencies:
-```bash
 npm install
-```
-
-3. Start the development server:
-```bash
 npm run dev
 ```
 
-4. Open your browser to `http://localhost:5173`
-
-### Build for Production
-
+Build
 ```bash
 npm run build
 ```
 
-The production build will be output to the `dist/` directory.
+The production build will be outputed to the `dist/` directory.
 
 ## Usage
 
