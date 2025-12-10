@@ -18,8 +18,8 @@ jobs:
 
       - name: Generate changelog
         run: |
-          # Get all commits in descending order (newest first)
-          git log --pretty=format:'%ad|%s|%an' --date=short > /tmp/commits.txt
+          # Get all commits in descending order (newest first), excluding changelog bot commits
+          git log --pretty=format:'%ad|%s|%an' --date=short | grep -v '\[skip ci\]' > /tmp/commits.txt
 
           # Generate changelog content grouped by date
           echo "" > /tmp/changelog_content.md
