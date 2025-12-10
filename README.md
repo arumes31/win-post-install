@@ -159,6 +159,11 @@ win-post-install/
 └── package.json            # Project dependencies
 ```
 
+## Documentation
+
+- [Contributing Guide](CONTRIBUTING.md)
+- [Changelog](CHANGELOG.md)
+
 ## Contributing
 
 Contributions are welcome! Please read our **[Contributing Guide](CONTRIBUTING.md)** for detailed instructions on:
