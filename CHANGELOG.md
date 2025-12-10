@@ -11,6 +11,7 @@ This changelog is automatically generated from git commits.
 
 ### 2025-12-10
 
+- refactor: split catalog into individual files per software/config (#12) (@Kaic)
 - feat: add theme toggle button in header (@Kaic Bento)
 - feat: add dark mode with Win98 aesthetic (@Kaic Bento)
 - docs: add generic issue template (@Kaic Bento)
