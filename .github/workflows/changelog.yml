@@ -1,0 +1,57 @@
+name: Update Changelog
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Generate changelog
+        run: |
+          # Get all commits in descending order (newest first)
+          git log --pretty=format:'%ad|%s|%an' --date=short | while IFS='|' read -r date message author; do
+            echo "$date|$message|$author"
+          done > /tmp/commits.txt
+
+          # Generate changelog content grouped by date
+          echo "" > /tmp/changelog_content.md
+          current_date=""
+
+          while IFS='|' read -r date message author; do
+            if [ "$date" != "$current_date" ]; then
+              if [ -n "$current_date" ]; then
+                echo "" >> /tmp/changelog_content.md
+              fi
+              echo "### $date" >> /tmp/changelog_content.md
+              echo "" >> /tmp/changelog_content.md
+              current_date="$date"
+            fi
+            echo "- $message (@$author)" >> /tmp/changelog_content.md
+          done < /tmp/commits.txt
+
+          # Update CHANGELOG.md between markers
+          head -n $(grep -n "CHANGELOG_START" CHANGELOG.md | cut -d: -f1) CHANGELOG.md > /tmp/changelog_new.md
+          echo "" >> /tmp/changelog_new.md
+          cat /tmp/changelog_content.md >> /tmp/changelog_new.md
+          echo "" >> /tmp/changelog_new.md
+          tail -n +$(grep -n "CHANGELOG_END" CHANGELOG.md | cut -d: -f1) CHANGELOG.md >> /tmp/changelog_new.md
+
+          mv /tmp/changelog_new.md CHANGELOG.md
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md
+          git diff --staged --quiet || git commit -m "docs: update changelog [skip ci]"
+          git push
